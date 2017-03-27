@@ -304,3 +304,137 @@ public class index extends JFrame{
 					}
 			}                                                       
     	   }); 
+
+	/* Слушатель события для компонента кнопка Рассчитать*/	
+		calc_v.addActionListener(new ActionListener()   
+    			/* 	calc_v - кнопка Рассчитать объем
+    	 		"."  - указывает к какой переменной (кнопке) следует применить слушателя.
+    	 		addActionListener - добавление слушателя ActionListener к кнопке
+    	  		new - Оператор new создает экземпляр указанного класса 
+    	  		(Для того чтобы кнопки стали функциональными, каждой из них необходимо присвоить обработчик событий, 
+    	  		который будет отвечать за реагирование на события. 
+    	  		В нашем случае требуется идентифицировать событие нажатия кнопки – путем щелчка мышью. 
+    	  		Поэтому будет использоваться интерфейс "ActionListener", 
+    	  		предназначенный для обработки событий "ActionEvent".
+    	  		тело интерфейса указывается ниже после фигурной скобки "{"
+    	  		*/ 
+    	   {                                                         
+    	    public void actionPerformed(ActionEvent e)   
+    	    /* 	ActionListener" имеет метод "actionPerformed" объекта "ActionEvent", 
+      		который реализуется путем простого вызова обработчика событий ActionPerformed.
+      		Ключевое слово public означает, что метод actionPerformed() доступен для любого другого класса Java
+      		Ключевое слово void означает, что метод main() не возвращает данных в программу, которая его вызвала. 
+      	*/
+    	    {  
+    	    	if ((int_in==0)&&(int_out==0)){ /*Если не выбран ни один флажок, выйдет ошибка что нужно 
+    	    	выбрать внутренние или внешние размеры введены */
+	    			JDialog D=new JDialog();
+	    			JOptionPane.showMessageDialog(D, "Вы должны выбрать внутренние или внешние размеры "
+	    					+ "введены", "Ошибка", JOptionPane.WARNING_MESSAGE);	
+    	    	} else { //Если какой то из флажков выбран, то делаем проверку на ввод верных данных
+    	    	
+    	    	if (int_in==1) { // если были введены внутренние размеры, то проверяем поля для внутренних размеров
+    	    		if ((isValidInput(in_a, "ширину")) && 
+    	    	    	(isValidInput(in_h, "высоту")) && 
+    	    	    	(isValidInput(in_l, "глубину"))&& 
+    	    	   		(isValidInput(in_t, "толщину материала")))
+    	    	    		/* if - оператор если. * isValidInput проверяет данные на правильность, т.е. 
+    	    		 		если в текстовые поля введены буквы или символы (текст, который невозможно преобразовать в цифры).
+    	    		   		Если введены некорректные данные, то выдает ошибку */	
+    	    	    		{
+	    	    			if ((Double.parseDouble(in_a.getText().replace(',','.'))==0)||
+	    		            	(Double.parseDouble(in_h.getText().replace(',','.'))==0)||
+	    		            	(Double.parseDouble(in_l.getText().replace(',','.'))==0)||
+	    		            	(Double.parseDouble(in_t.getText().replace(',','.'))==0)){ 
+	    			    	    			JDialog D=new JDialog();
+	    			    	    			JOptionPane.showMessageDialog(D, "Размеры не могут быть равны нулю", "Ошибка", JOptionPane.WARNING_MESSAGE);	
+	    		        	    } else {
+	    		        	    	// если введены корректные данные производим расчет
+	    		        	    	calc.gettext_in();/* Обращаемся в класс calc к методу gettext_in 	*/
+	    		        	    	calc.calcul();/* Обращаемся в класс calc к методу calcul 	*/
+
+	    		        	    }
+    	    	    		}
+    	    	} else { //если введены внешние размеры
+    	    		if ((isValidInput(out_a, "ширину")) && 
+    	    	    	(isValidInput(out_h, "высоту")) && 
+    	    	    	(isValidInput(out_l, "глубину"))&& 
+    	    	   		(isValidInput(in_t, "толщину материала")))
+    	    	    		/* if - оператор если. * isValidInput проверяет данные на правильность, т.е. 
+    	    		 		если в текстовые поля введены буквы или символы (текст, который невозможно преобразовать в цифры).
+    	    		   		Если введены некорректные данные, то выдает ошибку */	
+    	    	    		{
+    	    					
+    	    			if ((Double.parseDouble(out_a.getText().replace(',','.'))==0)||
+    		            		(Double.parseDouble(out_h.getText().replace(',','.'))==0)||
+    		            		(Double.parseDouble(out_l.getText().replace(',','.'))==0)||
+    		            		(Double.parseDouble(in_t.getText().replace(',','.'))==0)
+    	            				){ 
+    			    	    			JDialog D=new JDialog();
+    			    	    			JOptionPane.showMessageDialog(D, "Размеры не могут быть равны нулю", "Ошибка", JOptionPane.WARNING_MESSAGE);	
+    		        	    } else {
+    		        	    	if ((Double.parseDouble(out_a.getText().replace(',','.'))<=Double.parseDouble(in_t.getText().replace(',','.'))*2)||
+    			            			(Double.parseDouble(out_h.getText().replace(',','.'))<=Double.parseDouble(in_t.getText().replace(',','.'))*2)||
+    			            			(Double.parseDouble(out_l.getText().replace(',','.'))<=Double.parseDouble(in_t.getText().replace(',','.'))*2)){ 
+    				    	    			JDialog D=new JDialog();
+    				    	    			JOptionPane.showMessageDialog(D, "Внешние размеры не могут быть меньше толщины двух стенок", "Ошибка", JOptionPane.WARNING_MESSAGE);	
+    			        	    	} else {
+    			        	    		
+    			        	    		// если введены корректные данные производим расчет
+    			        	    		
+    	    		        	    	calc.gettext_out();/* Обращаемся в класс calc к методу gettext_out 	*/
+    	    		        	    	calc.calcul();/* Обращаемся в класс calc к методу calcul 	*/
+
+    			        	    		
+    			        	    	}  		        	    	
+    		        	    }
+    	    	    	}    		
+    	    		}
+    	    	}
+    	     }                                                        
+    	   });  
+
+		/* Слушатель события для компонента кнопка Очистить*/	
+
+		del.addActionListener(new ActionListener()     
+				//добавляем слушателя события для кнопки 
+				/*      "."  - указывает к какой переменной (кнопке) следует применить слушателя.
+			 	addActionListener - добавление слушателя ActionListener к кнопке
+			  	new - Оператор new создает экземпляр указанного класса 
+			  	(Для того чтобы кнопки стали функциональными, каждой из них необходимо присвоить обработчик событий, 
+			  	который будет отвечать за реагирование на события. 
+			  	В нашем случае требуется идентифицировать событие нажатия кнопки – путем щелчка мышью. 
+			  	Поэтому будет использоваться интерфейс "ActionListener", 
+			  	предназначенный для обработки событий "ActionEvent".
+			  	тело интерфейса указывается ниже после фигурной скобки "{"
+	    	    */   
+		   {		
+		    public void actionPerformed(ActionEvent e)  
+		    /* 	ActionListener" имеет метод "actionPerformed" объекта "ActionEvent", 
+	      	который реализуется путем простого вызова обработчика событий ActionPerformed.
+	      	Ключевое слово public означает, что метод actionPerformed() доступен для любого другого класса Java
+	      	Ключевое слово void означает, что метод main() не возвращает данных в программу, которая его вызвала. 
+	      	*/  
+		    {
+		    	
+		    	//	Обнуляем все поля, переменные, флажки ставим в состояние выключен
+		    	in_a.setText("");
+		    	in_h.setText("");    			
+		    	in_l.setText("");    			
+		    	in_t.setText("");
+		    	out_a.setText("");
+		    	out_h.setText("");
+		    	out_l.setText("");
+		    	label_in.setText("");
+		    	label_out.setText("");
+		    	in.setSelected(false);
+		    	out.setSelected(false);
+		    	int_in=0;
+		    	int_out=0;
+		    }                                                        
+		   }); 
+		
+	
+     }
+	
+	
