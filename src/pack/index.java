@@ -149,3 +149,158 @@ public class index extends JFrame{
 		
 		del = new JButton("Очистить"); //Компонент кнопка. В скобках - надпись на кнопке
 		calc_v = new JButton("Рассчитать объем"); //В скобках - надпись на кнопке
+		
+		in = new JCheckBox("Внутренние размеры");//компонент флажок 
+		in.setToolTipText("Ввести внутренние размеры");
+		/* setToolTipText - подсказка, которая показывается при наведении на элемент (компонент флажок)*/
+		
+		out = new JCheckBox("Внешние размеры");//компонент флажок 
+		out.setToolTipText("Ввести внешние размеры");
+		/*setToolTipText - подсказка, которая показывается при наведении на элемент (компонент флажок)*/
+//Внутренние размеры	
+
+		in_a = new JTextField();
+		in_a.setMargin(new Insets(2, 5, 2, 5));//установка внутренних отступов для текстового поля (2-верхний отступ, 5-левый, 2-нижний, 5-правый)
+		in_a.setToolTipText("Введите ширину");//всплывающая подсказка при наведении на текстовое поле
+    	
+		in_h = new JTextField();
+		in_h.setMargin(new Insets(2, 5, 2, 5));//установка внутренних отступов для текстового поля (2-верхний отступ, 5-левый, 2-нижний, 5-правый)
+		in_h.setToolTipText("Введите высоту");//всплывающая подсказка при наведении на текстовое поле
+    			
+		in_l = new JTextField();
+		in_l.setMargin(new Insets(2, 5, 2, 5));//установка внутренних отступов для текстового поля (2-верхний отступ, 5-левый, 2-нижний, 5-правый)
+		in_l.setToolTipText("Введите глубину");//всплывающая подсказка при наведении на текстовое поле
+
+		in_t = new JTextField();
+		in_t.setMargin(new Insets(2, 5, 2, 5));//установка внутренних отступов для текстового поля (2-верхний отступ, 5-левый, 2-нижний, 5-правый)
+		in_t.setToolTipText("Введите толщину материала");//всплывающая подсказка при наведении на текстовое поле
+// Внешние размеры
+		out_a = new JTextField();
+		out_a.setMargin(new Insets(2, 5, 2, 5));//установка внутренних отступов для текстового поля (2-верхний отступ, 5-левый, 2-нижний, 5-правый)
+		out_a.setToolTipText("Введите ширину");//всплывающая подсказка при наведении на текстовое поле
+    	
+		out_h = new JTextField();
+		out_h.setMargin(new Insets(2, 5, 2, 5));//установка внутренних отступов для текстового поля (2-верхний отступ, 5-левый, 2-нижний, 5-правый)
+		out_h.setToolTipText("Введите высоту");//всплывающая подсказка при наведении на текстовое поле
+    			
+		out_l = new JTextField();
+		out_l.setMargin(new Insets(2, 5, 2, 5));//установка внутренних отступов для текстового поля (2-верхний отступ, 5-левый, 2-нижний, 5-правый)
+		out_l.setToolTipText("Введите глубину");//всплывающая подсказка при наведении на текстовое поле
+		
+		
+		//Добавление кнопок на панель panel_1
+		panel_1.add(del);
+		panel_1.add(calc_v);
+
+		//Добавление флажков на панель panel_0
+		panel_0.add(in);
+		panel_0.add(out);
+						
+		//Добавление компонентов JLabel, JTextField, JCheckBox на панель panel
+		panel.add(label1);
+		panel.add(in_a);
+		panel.add(label2);
+		panel.add(out_a);
+		
+		panel.add(label3);
+		panel.add(in_h);
+		panel.add(label4);
+		panel.add(out_h);
+		
+		panel.add(label5);
+		panel.add(in_l);
+		panel.add(label6);
+		panel.add(out_l);
+		
+		panel.add(label7);
+		panel.add(in_t);
+		panel.add(label10);
+		panel.add(label11);
+
+		panel.add(label8);
+		panel.add(label_in);
+		panel.add(label9);	
+		panel.add(label_out);
+		//Добавление компонентов JLabel, JTextField, JCheckBox на панель panel
+
+		// поля для ввода текста недоступны пока пользователь не выберет какие размеры он будет вводить - внутренние или наружные
+		in_a.setEditable(false);
+		in_h.setEditable(false);
+		in_l.setEditable(false);
+		out_a.setEditable(false);
+		out_h.setEditable(false);
+		out_l.setEditable(false);
+		in_t.setEditable(false);
+		
+	/* Слушатель события для компонента флажок Внутренние размеры*/	
+		in.addItemListener(new ItemListener(){   /*Для компонента флажок устанавливаем слушатель события                                                        
+			Если нажать на компонент - сработает проверка выбран флажок или снят */                                                     
+			public void itemStateChanged(ItemEvent e) 
+			/*. В теле метода itemStateChanged располагается код, который выполняется при смене состояния флажка. */
+			{
+				if (e.getSource()==in)//если событие произошло именно с флажком in, то выполняется следующее
+					if(e.getStateChange()==1){ /* Если данный компонент флажок включен (==1), то это значит 
+					что введены внутренние размеры */
+						 int_in=1;//переменная отвечающая были ли введены внутренние размеры, 1-да, 0-нет
+						 int_out=0;//переменная отвечающая были ли введены внешние размеры, 1-да, 0-нет
+						 out.setSelected(false);//если флажок на внешних размер был включен - выключить его
+						 	
+						 	// поля для ввода внутренних размеров - доступны, внешних - недоступны
+							in_a.setEditable(true);
+							in_h.setEditable(true);
+							in_l.setEditable(true);
+							out_a.setEditable(false);
+							out_h.setEditable(false);
+							out_l.setEditable(false);
+							in_t.setEditable(true);
+						}
+					else { //флажок выключен
+						int_in=0;//переменная отвечающая были ли введены внутренние размеры, 1-да, 0-нет
+					 	
+						// поля для ввода размеров - недоступны
+						in_a.setEditable(false);
+						in_h.setEditable(false);
+						in_l.setEditable(false);
+						out_a.setEditable(false);
+						out_h.setEditable(false);
+						out_l.setEditable(false);
+						in_t.setEditable(false);
+					}
+			}                                                       
+    	   }); 	
+
+/* Слушатель события для компонента флажок Внешние размеры*/	
+		out.addItemListener(new ItemListener(){   /*Для компонента флажок устанавливаем слушатель события                                                        
+			Если нажать на компонент - сработает проверка выбран флажок или снят */                                                     
+			public void itemStateChanged(ItemEvent e) 
+			/*. В теле метода itemStateChanged располагается код, который выполняется при смене состояния флажка. */
+			{
+				if (e.getSource()==out)//если событие произошло именно с флажком out, то выполняется следующее
+					if(e.getStateChange()==1){ /* Если данный компонент флажок включен (==1), то это значит 
+					что введены внешние размеры */
+						 int_in=0;//переменная отвечающая были ли введены внутренние размеры, 1-да, 0-нет
+						 int_out=1;//переменная отвечающая были ли введены внешние размеры, 1-да, 0-нет
+						 in.setSelected(false);//если флажок на внутренние размеры был включен - выключить его
+						
+						 // поля для ввода внешних размеров - доступны, внутренних - недоступны
+							in_a.setEditable(false);
+							in_h.setEditable(false);
+							in_l.setEditable(false);
+							out_a.setEditable(true);
+							out_h.setEditable(true);
+							out_l.setEditable(true);
+							in_t.setEditable(true);
+						}
+					else { //флажок выключен
+						int_out=0;//переменная отвечающая были ли введены внешние размеры, 1-да, 0-нет
+						// поля для ввода размеров - недоступны
+						in_a.setEditable(false);
+						in_h.setEditable(false);
+						in_l.setEditable(false);
+						out_a.setEditable(false);
+						out_h.setEditable(false);
+						out_l.setEditable(false);
+						in_t.setEditable(false);
+					}
+			}                                                       
+    	   }); 
